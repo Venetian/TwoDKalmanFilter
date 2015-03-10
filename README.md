@@ -1,2 +1,308 @@
 # TwoDKalmanFilter
 Simple Kalman filter with no dependencies for tempo/phase or velocity/position tracking
+
+It can be quite diufficult to find a simple Kalman Filter in C++ without recourse to large libraries like openCV. In Python, you can use pykalman.
+
+
+Classes for Two-dimnesional Vector and 2x2 Matrix
+A simple class does Kalman Filtering using:
+
+model equations:
+x_k = x_k-1 + v_k-1 + noise_x (covaraiance Q_x)
+v_k = v_k-1 + noise_v (covaraiance Q_v)
+
+given the estimates:
+(x_0, v_0) initialises the model
+then (x_n, v_n) results in new predictions from the filter.
+
+You'll need to think about the correct covariance matrices for initialisation, Q, R and P_k
+
+see for example:
+http://bilgin.esme.org/BitsBytes/KalmanFilterforDummies.aspx
+
+
+To run this, create a command line tool in Xcode or whichever IDE you use.
+
+
+
+
+
+
+The output of teh simple example, run as a command line tool is:
+
+
+SIMPLE EXAMPLE FOR TEMPO AND PHASE PROCESSING WITH KALMAN FILTER!
+our estimate starts out at 2000ms position and 500 ms beat period
+15.000000 0.000000
+0.000000 9.000000
+
+1.000000 0.000000
+1.000000 1.000000
+
+15.000000 0.000000
+9.000000 9.000000
+
+24.000000 9.000000
+9.000000 9.000000
+
+2500.000000
+500.000000
+
+Pk_hat
+49.000000 9.000000
+9.000000 9.800000
+
+Pk_hat+R
+149.000000 9.000000
+9.000000 25.799999
+
+denom inverse:
+0.006856 -0.002392
+-0.002392 0.039594
+
+0.400000 0.000000
+0.000000 0.400000
+
+new kalman gain
+0.314413 0.239158
+0.038265 0.366497
+
+new observation 2510.000000 and tempo 50.500000
+2500.000000
+500.000000
+
+10.000000
+-449.500000
+
+new kalman gain
+0.314413 0.239158
+0.038265 0.366497
+
+diff
+10.000000
+-449.500000
+
+product
+-104.357460
+-164.357574
+
+new estimate
+2395.642578
+335.642426
+
+TWO_D OUT AT 2510 vs 2395.64
+, tempo50.5 vs 335.642
+15.000000 0.000000
+0.000000 9.000000
+
+1.000000 0.000000
+1.000000 1.000000
+
+15.000000 0.000000
+9.000000 9.000000
+
+24.000000 9.000000
+9.000000 9.000000
+
+2560.500000
+50.500000
+
+Pk_hat
+49.000000 9.000000
+9.000000 9.800000
+
+Pk_hat+R
+149.000000 9.000000
+9.000000 25.799999
+
+denom inverse:
+0.006856 -0.002392
+-0.002392 0.039594
+
+0.314413 0.239158
+0.038265 0.366497
+
+new kalman gain
+0.314413 0.239158
+0.038265 0.366497
+
+new observation 3021.000000 and tempo 513.000000
+2560.500000
+50.500000
+
+460.500000
+462.500000
+
+new kalman gain
+0.314413 0.239158
+0.038265 0.366497
+
+diff
+460.500000
+462.500000
+
+product
+255.397964
+187.125854
+
+new estimate
+2815.897949
+237.625854
+
+TWO_D OUT AT 3021 vs 2815.9
+, tempo513 vs 237.626
+15.000000 0.000000
+0.000000 9.000000
+
+1.000000 0.000000
+1.000000 1.000000
+
+15.000000 0.000000
+9.000000 9.000000
+
+24.000000 9.000000
+9.000000 9.000000
+
+3534.000000
+513.000000
+
+Pk_hat
+49.000000 9.000000
+9.000000 9.800000
+
+Pk_hat+R
+149.000000 9.000000
+9.000000 25.799999
+
+denom inverse:
+0.006856 -0.002392
+-0.002392 0.039594
+
+0.314413 0.239158
+0.038265 0.366497
+
+new kalman gain
+0.314413 0.239158
+0.038265 0.366497
+
+new observation 3543.000000 and tempo 521.000000
+3534.000000
+513.000000
+
+9.000000
+8.000000
+
+new kalman gain
+0.314413 0.239158
+0.038265 0.366497
+
+diff
+9.000000
+8.000000
+
+product
+4.742985
+3.276361
+
+new estimate
+3538.742920
+516.276367
+
+TWO_D estimate: 3538.74, tempo 516.276
+Pk
+15.000000 0.000000
+0.000000 9.000000
+
+Pk_hat
+49.000000 9.000000
+9.000000 9.800000
+
+new kalman gain
+0.314413 0.239158
+0.038265 0.366497
+
+0.685587 -0.239158
+-0.038265 0.633503
+
+updated Pk
+31.441326 3.826531
+3.826531 5.863945
+
+31.441326 3.826531
+3.826531 5.863945
+
+1.000000 0.000000
+1.000000 1.000000
+
+35.267857 3.826531
+9.690476 5.863945
+
+44.958332 9.690476
+9.690476 5.863945
+
+4055.019287
+516.276367
+
+Pk_hat
+69.958336 9.690476
+9.690476 6.663946
+
+Pk_hat+R
+169.958328 9.690476
+9.690476 22.663946
+
+denom inverse:
+0.006031 -0.002579
+-0.002579 0.045225
+
+0.314413 0.239158
+0.038265 0.366497
+
+new kalman gain
+0.396918 0.257861
+0.041258 0.276392
+
+new observation 4045.000000 and tempo 507.000000
+4055.019287
+516.276367
+
+-10.019345
+-9.276361
+
+new kalman gain
+0.396918 0.257861
+0.041258 0.276392
+
+diff
+-10.019345
+-9.276361
+
+product
+-6.368872
+-2.977290
+
+new estimate
+4048.650391
+513.299072
+
+TWO_D estimate: 4048.65, tempo 513.299
+Pk
+31.441326 3.826531
+3.826531 5.863945
+
+Pk_hat
+69.958336 9.690476
+9.690476 6.663946
+
+new kalman gain
+0.396918 0.257861
+0.041258 0.276392
+
+0.603082 -0.257861
+-0.041258 0.723608
+
+updated Pk
+39.691807 4.125778
+4.125778 4.422276
+
+Program ended with exit code: 0
