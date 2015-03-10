@@ -51,7 +51,7 @@ void TwoDKalmanTempoFilter::init(double phase, double tempo){
     estimate.init(phase, tempo);
     
     //printf("anrfilter: set up filter to phase %f, tempo %f\n", phase, tempo);
-    //HSTREAM << "TWO_D_KALMAN RE-INIT phase " << phase << ", tempo " << tempo << std::endl;
+    HSTREAM << "TWO_D_KALMAN RE-INIT phase " << phase << ", tempo " << tempo << std::endl;
     
     
 }
@@ -160,7 +160,7 @@ void TwoDKalmanTempoFilter::updateEstimate(TwoDVector<double>& newMeasurement) {
     TwoDVector<double> diff = (newMeasurement- estimate);
     
     if (printing) {
-        printf("new observation %f and tempo %f\n", newMeasurement.a, newMeasurement.b);
+        printf("new observation %f and tempo %f\nestimate is:\n", newMeasurement.a, newMeasurement.b);
         estimate.print();
         (newMeasurement - estimate).print();
         
@@ -174,7 +174,7 @@ void TwoDKalmanTempoFilter::updateEstimate(TwoDVector<double>& newMeasurement) {
         (kalmanGain*diff).print();
     }
     
-    estimate = estimate + (kalmanGain*(newMeasurement- estimate));
+    estimate = estimate + (kalmanGain*(newMeasurement - estimate));
     
     if (printing) {
         printf("new estimate\n");
@@ -234,7 +234,7 @@ void TwoDKalmanTempoFilter::simpleExample() {
     
     
     //then we see some data
-     newMeasurement(2510., 50.5);
+     newMeasurement(2510., 504.5);
      newMeasurement(3021, 513.);
      newMeasurement(3543., 521.);
      newMeasurement(4045, 507.);
